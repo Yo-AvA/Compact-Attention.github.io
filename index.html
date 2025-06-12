@@ -2,1168 +2,845 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-    <!-- Replace the content tag with appropriate information -->
-    <meta name="description" content="Huawei">
-    <meta property="og:title" content="Huawei" />
-    <meta property="og:description" content="Huawei" />
+  <meta charset="utf-8">
+  <title>Self Forcing</title>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-    <!-- Keywords for your paper to be indexed by-->
-    <meta name="keywords" content="Huawei">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    function gtag() {
+      dataLayer.push(arguments);
+    }
 
-    <title>华为火花-超长序列视频推理加速</title>
-    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    gtag('js', new Date());
 
-    <link rel="stylesheet" href="static/css/bulma.min.css">
-    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <link rel="stylesheet" href="static/css/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+    gtag('config', 'G-PYVRSFMDRL');
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-    <script defer src="static/js/fontawesome.all.min.js"></script>
-    <script src="static/js/bulma-carousel.min.js"></script>
-    <script src="static/js/bulma-slider.min.js"></script>
-    <script src="static/js/index.js"></script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggleButton = document.getElementById('toggleButton');
+      const tocContent = document.getElementById('tocContent');
+      const tocHeader = document.querySelector('.toc-header');
 
-    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_SVG"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-                inlineMath: [['$','$'], ['\\(','\\)']],
-                displayMath: [['$$', '$$'], ['\\[','\\]']]
-            }
-        });
-    </script>
+      function toggleMenu() {
+        tocContent.classList.toggle('collapsed');
+        toggleButton.textContent = tocContent.classList.contains('collapsed') ? '▶' : '▼';
+      }
 
-    <style>
-        .centered-content {
-            text-align: center;
-        }
-        .video-container {
-            width: 90%; 
-            margin: 0 auto; 
-            display: flex; /* Use flexbox to arrange videos side by side */
-            justify-content: center; /* Center the videos horizontally */
-            gap: 20px; /* Add space between videos */
-        }
-        .italic {
-            font-family: 'Playfair Display';
-            font-style: italic;
-        }
-        
-        /* 设置表格宽度和字体大小 */
-        table {
-            width: 80%; /* 设置表格的宽度为容器的80% */
-            margin: 0 auto; /* 将表格居中 */
-            border-collapse: collapse; /* 合并表格的边框 */
-            font-size: 18px; /* 设置字体大小 */
-        }
+      tocHeader.addEventListener('click', toggleMenu);
+    });
 
-        /* 设置表头的样式 */
-        th, td {
-            padding: 12px; /* 增加单元格的内边距 */
-            text-align: center; /* 设置文字居中对齐 */
-            border: 1px solid black; /* 设置边框 */
-        }
-
-        /* 设置表头的背景色 */
-        thead {
-            background-color: #f2f2f2; /* 设置表头的背景颜色 */
-        }
-        body {
-            padding-bottom: 100px;  /* 留100px的底部空白 */
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .section {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .section h2 {
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .section table {
-            font-family: "Times New Roman", serif;
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 0.9em; /* 设置字体大小 */
-        }
-        .section th, .section td {
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        .section th {
-            background-color: #f2f2f2;
-        }
-
-        /* 设置图片容器的grid布局 */
-        .image-container {
-            display: grid;
-            gap: 20px; /* 设置图片之间的间距 */
-            justify-items: center; /* 图片水平居中对齐 */
-        }
-        /* 设置文字描述的样式 */
-        .image-container div p {
-            text-align: center; /* 文字居中对齐 */
-            font-size: 18px; /* 设置文字大小 */
-            margin-top: 3px; /* 减少图片与文字之间的间距 */
-        }
-        /* 针对grid-image类的图片，设置大小 */
-        .grid-image {
-            width: 100%; /* 图片宽度自适应容器 */
-            height: auto; /* 保持宽高比 */
-            max-width: 1200px; /* 最大宽度设置为1200px，确保图片大小合适 */
-        }
-        
-        /* 2张图片进行排列 */
-        .image-container4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 设置2列布局 */
-            gap: 20px; /* 设置图片之间的间距 */
-            justify-items: center; /* 图片水平居中对齐 */
-        }
-        /* 设置文字描述的样式 */
-        .image-container4 div p {
-            text-align: center; /* 文字居中对齐 */
-            font-size: 24px; /* 设置文字大小 */
-            margin-top: 3px; /* 减少图片与文字之间的间距 */
-            font-weight: bold;
-        }
-        /* 针对grid-image类的图片，设置大小 */
-        .grid-image4 {
-            width: 100%; /* 图片宽度自适应容器 */
-            height: auto; /* 保持宽高比 */
-            max-width: 1400px; /* 最大宽度设置为1200px，确保图片大小合适 */
-        }
-        /* 4张图片进行排列 */
-
-        /* 2张图片进行排列 */
-        .image-container2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 设置2列布局 */
-            gap: 20px; /* 设置图片之间的间距 */
-            justify-items: center; /* 图片水平居中对齐 */
-        }
-        .image-container2 img {
-            width: 100%;
-            height: 500px; /* 固定高度 */
-            object-fit: scale-down;
-        }
-        /* 设置文字描述的样式 */
-        .image-container2 div p {
-            text-align: center; /* 文字居中对齐 */
-            font-size: 24px; /* 设置文字大小 */
-            margin-top: 3px; /* 减少图片与文字之间的间距 */
-            font-weight: bold;
-        }
-        /* 针对grid-image类的图片，设置大小 */
-        .grid-image2 {
-            width: 100%; /* 图片宽度自适应容器 */
-            height: auto; /* 保持宽高比 */
-            max-width: 1000px; /* 最大宽度设置为1200px，确保图片大小合适 */
-        }
-        /* 2张图片进行排列 */
-
-        /* 2张图片进行排列另一种写法*/
-        .image-container22 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 设置2列布局 */
-            gap: 30px; /* 设置图片之间的间距 */
-            justify-items: center; /* 图片水平居中对齐 */
-        }
-        /* 设置文字描述的样式 */
-        .image-container22 div p {
-            text-align: center; /* 文字居中对齐 */
-            font-size: 24px; /* 设置文字大小 */
-            margin-top: 3px; /* 减少图片与文字之间的间距 */
-            font-weight: bold;
-        }
-        /* 针对grid-image类的图片，设置大小 */
-        .grid-image22 {
-            width: 100%; /* 图片宽度自适应容器 */
-            height: auto; /* 保持宽高比 */
-            max-width: 1200px; /* 最大宽度设置为1200px，确保图片大小合适 */
-        }
-        /* 2张图片进行排列 */
+  </script>
 
 
-        /* 8张图片进行排列 */
-        .image-container8 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 设置4列布局 */
-            gap: 20px; /* 设置图片之间的间距 */
-            justify-items: center; /* 图片水平居中对齐 */
-        }
-        /* 设置文字描述的样式 */
-        .image-container8 div p {
-            text-align: center; /* 文字居中对齐 */
-            font-size: 18px; /* 设置文字大小 */
-            margin-top: 3px; /* 减少图片与文字之间的间距 */
-        }
-        /* 针对grid-image类的图片，设置大小 */
-        .grid-image8 {
-            width: 100%; /* 图片宽度自适应容器 */
-            height: auto; /* 保持宽高比 */
-            max-width: 1400px; /* 最大宽度设置为1200px，确保图片大小合适 */
-        }
-        /* 8张图片进行排列 */
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans&family=Noto+Sans&display=swap" rel="stylesheet">
 
-        /* 6张图片进行排列 */
-        .image-container6 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 设置4列布局 */
-            gap: 20px; /* 设置图片之间的间距 */
-            justify-items: center; /* 图片水平居中对齐 */
-        }
-        /* 设置文字描述的样式 */
-        .image-container6 div p {
-            text-align: center; /* 文字居中对齐 */
-            font-size: 18px; /* 设置文字大小 */
-            margin-top: 2px; /* 减少图片与文字之间的间距 */
-        }
-        /* 针对grid-image类的图片，设置大小 */
-        .grid-image6 {
-            width: 100%; /* 图片宽度自适应容器 */
-            height: auto; /* 保持宽高比 */
-            max-width: 1600px; /* 最大宽度设置为1200px，确保图片大小合适 */
-        }
-        /* 6张图片进行排列 */
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="preload" href="./static/css/index.css" as="style">
+  <link rel="stylesheet" href="./static/css/index.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/bulma-carousel.min.js"></script>
+  <script defer src="./static/js/bulma-slider.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
 
-    </style>
+  <style>
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .video-item {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .video-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .video-item video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .prompt-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #fff;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), transparent);
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .video-item:hover .prompt-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+    }
+  </style>
+
 
 </head>
 
 <body>
-    <!-- title and author -->
-    <section class="hero">
-        <div class="hero-body">
-            <div class="container is-max-desktop">
-                <div class="columns is-centered">
-                    <div class="column has-text-centered">
-                        <h1 class="title is-1 publication-title">
-                            华为火花 - 超长序列视频推理加速
-                        </h1>
 
-                        <div class="is-size-5 publication-authors">
-                            <!-- <span class="author-block">*Under Review</span> -->
-                        </div>
 
-                    </div>
-                </div>
-            </div>
+<!--   <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <br>
+
+            <h1 class="title is-1 publication-title">Self Forcing: Bridging Training and Inference in Autoregressive Video Diffusion <br> </h1>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section> -->
 
-    
-    <!-- abstract -->
-    <section class="section hero is-light" style="background: linear-gradient(135deg, #f0f8ff, #ffffff);">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <br>
+            <h1 class="title is-1 publication-title" style="margin-bottom:0rem">Self Forcing</h1>
+            <h2 class="title is-3 publication-title">Bridging the Train-Test Gap in Autoregressive Video Diffusion</h2>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://www.xunhuang.me/">Xun Huang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://zhengqili.github.io/">Zhengqi Li</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://guandehe.github.io/">Guande He</a><sup>2</sup>,
+              </span>
+              <!-- <br> -->
+              <span class="author-block">
+                <a href="https://mingyuanzhou.github.io/">Mingyuan Zhou</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://research.adobe.com/person/eli-shechtman/">Eli Shechtman</a><sup>1</sup>,
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Adobe Research,</span>
+              <span class="author-block"><sup>2</sup>UT Austin,</span>
+              <!-- <span class="author-block"><sup>*</sup>Equal Contribution</span> -->
+            </div>
+
+            <!-- <div class="is-size-5 column has-text-centered"> -->
+              <!-- <strong>CVPR 2025</strong> -->
+            <!-- </div> -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2506.08009" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/guandeh17/Self-Forcing"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-body" style="padding-bottom: 0rem;">
         <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-                    <h2 class="title is-3" style="color: #333; font-weight: bold;">火花奖技术诉求</h2>
-                    <p style="color: #666; line-height: 1.6; font-weight: bold;">
-                        提供面向超长序列（百万级）视频生成的推理加速关键技术：
-                    </p>
-                    <ul style="list-style-type: disc; padding-left: 2\5px; color: #555;">
-                        <li>该技术需支持一次性生成场景和自回归生成场景的计算加速（包括但不限于稀疏化、序列压缩），并保证几乎无损，理论计算加速达到2x。</li>
-                        <li>该技术需要设计序列并行技术，支持多卡扩展降低单卡计算量与峰值内存，并要求并行线性比>80%，8卡相比单卡并行理论加速6x以上。</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <div class="container has-text-centered">
-        <h2 class="title is-3">现阶段取得进展</h2>
-        <div class="content has-text-justified">
-        </div>
-        <h2 class="title is-4">1. 并行加速 视频生成效果</h2>
-        
-        <br>
-
-        <div class="video-container">
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/HunyuanVideo/STA/2025-03-10-11-53-25_gentime642.1794936656952_timestp_50_An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering t.mp4" type="video/mp4" />
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <div class="content has-text-justified">
+                <video controls preload="metadata" autoplay muted loop playsinline style="width: 100%; height: auto; border-radius: 8px;">
+                  <source src="static/videos/demo.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
                 </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            HunYuan大模型单卡生成效果
-                    </h2>
-                    <h4 class="subtitle has-text-centered italic">
-                        耗时1726.54s
-                    </h4>
+              </div>
             </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/HunyuanVideo/STA_multiwindow_v2_timestep15/2025-03-10-11-39-13_gentime1124.5366597175598_timestp_50_An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering t.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            新Pattern生成效果(耗时1124.53s)
-                    </h2>
-                    <h4 class="subtitle has-text-centered italic">
-                        相比HunYuan大模型端到端加速1.53倍，attention计算平均加速2.2倍
-                    </h4>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-10-21-08-46_gentime707.894357919693_timestp_50_An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering t.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            新Pattern+双卡head并行(耗时707.89s)
-                    </h2>
-                    <h4 class="subtitle has-text-centered italic">
-                            相比HunYuan大模型加速2.44倍
-                    </h4>
-            </div>
-            
-             
+          </div>
         </div>
-
-            <p style="color: #666; line-height: 1.4; padding-top: 20px;">Prompt: An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering the history of the universe as he sits at a cafe in Paris, his eyes focus on people offscreen as they walk as he sits mostly motionless, he is dressed in a wool coat suit coat with a button-down shirt, he wears a brown beret and glasses and has a very professorial appearance, and the end he offers a subtle closed-mouth smile as if he found the answer to the mystery of life, the lighting is very cinematic with the golden light and the Parisian streets and city in the background, depth of field, cinematic 35mm film.
-            </p>
-        <br>
-
-        <div class="grid-image">
-            <div>
-                <img src="static/images/fuzai_junheng.png" class="grid-image2" alt="Image 1">
-            </div>
-            
-        </div>
-        <p >半窗口：稀疏率=50%   满窗口：不做稀疏化，稀疏率=100% 
-        </p>
-        <!-- <p>重排：根据head的负载情况进行均匀分配，以确保各GPU上的负载差距尽可能小</p> -->
-
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <h2 class="title is-4">2. 新Pattern 视频生成效果</h2>
-
-        <p style="color: #666; line-height: 1.4; padding-top: 20px;">attention计算在平均时间上相比flash_v2，有2.3倍的加速</p>
-
-        <p>STA中针对十字型head大部分都选取了最大的window size进行计算，现在我们使用了多窗口来计算十字型head，
-            取得更好的视觉效果
-        </p>
-        
-        <div class="video-container">
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/HunyuanVideo/ori/2025-03-04-20-12-30_gentime1721.5763249397278_timestp_50_A cat walks on the grass, realistic style._ori.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            HunYuan大模型生成效果(耗时1721.57s)
-                    </h2>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/HunyuanVideo/STA/2025-03-05-15-28-06_gentime623.8373334407806_timestp_50_A cat walks on the grass, realistic style..mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            STA单窗口 (耗时623.83s)
-                    </h2>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/HunyuanVideo/STA_multiwindow_v2_timestep15/2025-03-09-18-49-21_gentime1118.895164012909_timestp_50_A cat walks on the grass, realistic style..mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                        新Pattern (耗时1118.89s),相比HunYuan整体加速1.54倍，attention计算平均加速2.2倍
-                    </h2>
-            </div>
-            
-        </div>
-        
-        <br>
-
-        <div class="grid-image">
-            <div>
-                <img src="static/images/cat_multiwindows.png" class="grid-image2" alt="Image 1">
-                
-            </div>
-            
-        </div>
-        
-        <br>
-        <br>
-        <h2 class="subtitle has-text-centered italic">
-            长文本
-        </h2>
-        
-        <div class="video-container">
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-10-12-46-44_gentime1726.5414171218872_timestp_50_An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering t.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            HunYuan大模型生成效果(耗时1726.54s)
-                    </h2>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-10-11-53-25_gentime642.1794936656952_timestp_50_An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering t.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            STA单窗口 (耗时642.17s)
-                    </h2>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-10-11-39-13_gentime1124.5366597175598_timestp_50_An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering t.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            多窗口生成效果(耗时1124.53s)，加速1.53倍
-                    </h2>
-            </div>
-        </div>
-        <p style="color: #666; line-height: 1.4; padding-top: 20px;">Prompt: An extreme close-up of an gray-haired man with a beard in his 60s, he is deep in thought pondering the history of the universe as he sits at a cafe in Paris, his eyes focus on people offscreen as they walk as he sits mostly motionless, he is dressed in a wool coat suit coat with a button-down shirt, he wears a brown beret and glasses and has a very professorial appearance, and the end he offers a subtle closed-mouth smile as if he found the answer to the mystery of life, the lighting is very cinematic with the golden light and the Parisian streets and city in the background, depth of field, cinematic 35mm film.
-        </p>
-        <br>
-        <div class="grid-image">
-            <div>
-                <img src="static/images/grayman.png" class="grid-image2" alt="Image 1">
-    
-            </div>
-            
-        </div>
-
-        <br> 
-        
- 
-        <!-- 四个视频结束 -->
-        <div class="video-container">
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-11-21-00-53_gentime1726.1180930137634_timestp_50_a close-up shot of a woman standing in a dimly lit room. she is wearing a traditional chinese outfit.mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            HunYuan大模型生成效果(耗时1726.11s)
-                    </h2>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-11-21-24-44_gentime638.1768188476562_timestp_50_a close-up shot of a woman standing in a dimly lit room. she is wearing a traditional chinese outfit.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                            STA单窗口 (耗时638.17s)
-                    </h2>
-            </div>
-            <div>
-                <video autoplay controls muted loop>
-                    <source src="static/videos/2025-03-11-21-45-31_gentime1147.4892847537994_timestp_50_a close-up shot of a woman standing in a dimly lit room. she is wearing a traditional chinese outfit.mp4" type="video/mp4" />
-                </video>
-                    <h2 class="subtitle has-text-centered italic">
-                        新Pattern(耗时1147.48s)，相比HunYuan整体加速1.50倍，attention计算平均加速2.2倍
-                    </h2>
-            </div>
-            
-            
-        </div>
-        <p style="color: #666; line-height: 1.4; padding-top: 20px;">Prompt: a close-up shot of a woman standing in a dimly lit room. she is wearing a traditional chinese outfit, which includes a red and gold dress with intricate designs and a matching headpiece. the woman has her hair styled in an updo, adorned with a gold accessory. her makeup is done in a way that accentuates her features, with red lipstick and dark eyeshadow. she is looking directly at the camera with a neutral expression. the room has a rustic feel, with wooden beams and a stone wall visible in the background. the lighting in the room is soft and warm, creating a contrast with the woman's vibrant attire. there are no texts or other objects in the video. the style of the video is a portrait, focusing on the woman and her attire.
-        </p>
-        <br>
-        <div class="grid-image">
-            <div>
-                <img src="static/images/woman.png" class="grid-image2" alt="Image 1">
-            </div>
-            
-        </div>
-        <br>
-        <div class="grid-image">
-            <div>
-                <img src="static/images/qingting.png" class="grid-image2" alt="Image 1">
-    
-            </div>
-            
-        </div>
-        <!-- <div class="centered-content">
-            <img src="static/images/cross_notfull_recall.jpg" style="width: 50%; height: auto;" />                    
-        </div> -->
-
-        <br>
-        
-        <!-- <div class="centered-content">
-            <img src="static/images/cross_notfull_recall.jpg" style="width: 50%; height: auto;" />                    
-        </div> -->
-        <div class="grid-image">
-            <div>
-                <img src="static/images/bird.png" class="grid-image2" alt="Image 1">
-            </div>
-            
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <div>
-            <h2 class="title is-4">3.对单个head进行不同Pattern，不同稀疏率下的召回率分析</h2>
-            <p style="margin: 0 auto;">对同一个head在不同pattern下进行实验，测试不同稀疏率带来的召回率收益
-            </p>
-            <br>
-
-            <h2 class="title is-5">十字形注意力头</h2>
-            <div class="content has-text-justified"  style="margin: 0 auto;">
-                <div class="image-container">
-                    <div>
-                        <img src="static/images/Attn_Vis/cross_recall_table1.jpg" class="grid-image2" alt="Image 1">
-                    </div>
-                    <p>要达到95%以上的召回率，局部性窗口需要300的计算量，而十字形窗口只需要155，计算速度可以加速2倍。
-                    </p>
-                </div>
-                
-                <div class="image-container">
-                    <div>
-                        <img src="static/images/Attn_Vis/cross_recall_table2.jpg" class="grid-image2" alt="Image 1">
-                    </div>
-                    <p>要达到94%以上的召回率，局部性窗口需要45的计算量，而十字形窗口只需要25，计算速度可以加速约2倍。
-                    </p>
-                </div>
-                <div class="image-container">
-                    <div>
-                        <img src="static/images/Attn_Vis/cross_recall_table3.jpg" class="grid-image2" alt="Image 1">
-                    </div>
-                    <p>要达到90%以上的召回率，局部性窗口需要125的计算量，而十字形窗口只需要25，计算速度可以加速约4.5倍。
-                    </p>
-                </div>
-                <br>
-
-                <!-- <p style="margin: 0 auto;">timestep 40, layer 10, head 22</p> -->
-                
-                <div class="image-container2">
-                    <div>
-                        <img src="static/images/timestep40_layer20_head11.png.png" class="grid-image2" alt="Image 1">
-                    </div>
-                    <div>
-                        <img src="static/images/t40lay20head11.png" class="grid-image2" alt="Image 1">
-                        <!-- 添加文字描述 -->
-                    </div>
-                    <p>timestep40_layer20_head11</p>
-                    <p>视频总大小fhw=[30,48,80]，可视化图是像素点[15,24,40]对其他所有像素点的关注情况，按[48,80]为一帧，将30帧排布为[5,6]</p>
-                </div>
-            </div>
-            
-
-            <br>
-            <br>
-
-            <h2 class="title is-5">在时序上存在变化的注意力头</h2>
-            <div>
-                <div class="image-container">
-                    <div>
-                        <img src="static/images/Attn_Vis/time_recall_table1.jpg" class="grid-image2" alt="Image 1">
-                        <p>要达到80%以上的召回率，局部性窗口需要300的计算量，而十字形窗口只需要165，计算速度可以加速1.84127倍。
-                    </div>
-                </div>
-                <div class="image-container">
-                    <div>
-                        <img src="static/images/Attn_Vis/time_recall_table2.jpg" class="grid-image2" alt="Image 1">
-                        <p>要达到95%以上的召回率，局部性窗口需要300的计算量，而十字形窗口只需要151，计算速度可以加速2.034483倍。
-                    </div>
-                </div>
-                <div class="image-container">
-                    <div>
-                        <img src="static/images/Attn_Vis/time_recall_table3.jpg" class="grid-image2" alt="Image 1">
-                        <p>要达到80%以上的召回率，局部性窗口需要300的计算量，而十字形窗口只需要123，计算速度可以加速2.416667倍。
-                    </div>
-                </div>
-
-                <div class="image-container2">
-                    <div>
-                        <img src="static/images/Attn_Vis/timestep40_layer20_head0.png.png" class="grid-image2" alt="Image 1">
-                    </div>
-                    
-                    <div>
-                        <img src="static/images/Attn_Vis/time_recall_table11.jpg" class="grid-image2" alt="Image 1">
-                        <!-- 添加文字描述 -->
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-
-
-
-
-
-        
-        <div>
-            <h2 class="title is-5" style="text-align: center;">十字型pattern</h2>
-            <div class="image-container4">
-                <div>
-                    <img src="static/images/timestep30_layer0_head11.png" class="grid-image4" alt="Image 1">
-                    <p>timestep0  layer6 head4</p> <!-- 添加文字描述 -->
-                </div>
-                <div>
-                    <img src="static/images/timestep20_layer30_head13.png" class="grid-image4" alt="Image 2">
-                    <p>timestep0   layer4 head7</p> <!-- 添加文字描述 -->
-                </div>
-                <div>
-                    <img src="static/images/timestep20_layer39_head18.png" class="grid-image4" alt="Image 3">
-                    <p>timestep10 layer24 head21</p> <!-- 添加文字描述 -->
-                </div>
-                <div>
-                    <img src="static/images/timestep20_layer10_head10.png" class="grid-image4" alt="Image 4">
-                    <p>timestep30 layer0 head11</p> <!-- 添加文字描述 -->
-                </div>
-                
-            </div>
-
-        </div>
-
-        <div>
-            <!-- <img src="static/images/aaa.jpg"/> -->
-            <p>As shown in Figure 3 left, despite training with full 3D atten tion, HunyuanVideo exhibits strong locality: on average, a local window covering only 15.52% of the total token space accounts for 70%of the total attention score.</p>
-        </div>
-        <div class="container has-text-centered">
-            <h2 class="title is-3">
-                局部性滑动窗口
-                <br>
-            </h2>
-            
-            <div style="display: flex; justify-content: space-around; align-items: center;">
-                <div>
-                    <img src="static/images/jubuxing1.jpg" class="grid-image2" alt="Image 1" />
-                    <!-- <p>timestep XX</p> -->
-                </div>
-                <div>
-                    <img src="static/images/jubuxing2.jpg" class="grid-image2" alt="Image 3" />
-                    <!-- <p>timestep 40</p> -->
-                </div>
-            </div>
-
-            <br>
-
-            <h2 class="title is-3">
-                multi-window处理十字型attention pattern
-            </h2>
-            <div class="centered-content">
-                    <img src="static/images/multi_window.jpg" style="width: 50%; height: auto;" />                    
-                </div>
-            
-            
-        </div>
-
-        <h2 class="title is-4">
-            VBENCH生成质量
-            <br>
-        </h2>
-    
-        <table border="1" >
-            
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Config</th>
-                <th>VBench Quality</th>
-                <th>Latency</th>
-                <th>Speedup</th>
-              </tr>
-            </thead>
-          
-            
-            <tbody>
-              <tr>
-                <td>FA2</td>
-                <td>-</td>
-                <td>85.34%</td>
-                <td>1496s</td>
-                <td>0.63x</td>
-              </tr>
-              <tr>
-                <td>FA3</td>
-                <td>-</td>
-                <td>85.34%</td>
-                <td>945s</td>
-                <td>1.00x</td>
-              </tr>
-              <tr>
-                <td>3D Locality</td>
-                <td>w=(30,40,40)</td>
-                <td>84.63%</td>
-                <td>527s</td>
-                <td>1.79x</td>
-              </tr>
-              <tr>
-                <td>3D Locality</td>
-                <td>w=(18,24,24)</td>
-                <td>81.47%</td>
-                <td>268s</td>
-                <td>3.53x</td>
-              </tr>
-            </tbody>
-          </table>
-          
-    </div>
-    
-        <!-- <h2 class="title is-4">斜线pattern的不同膨胀</h2>
-        <div style="display: flex; justify-content: space-around; align-items: center;">
-            <div>
-                <img src="static/images/slash1.jpg" class="grid-image22" alt="Image 1" />
-            </div>
-            <div>
-                <img src="static/images/slash2.jpg" class="grid-image22" alt="Image 3" />
-            </div>
-        </div> -->
-
-
-        <h2 class="title is-4">
-            <a href="https://huggingface.co/spaces/Vchitect/VBench_Leaderboard" target="_blank">
-                VBENCH指标表
-            </a>
-        </h2>
-        <img src="static/images/table.jpg" /> <br>
-        <a href="https://vchitect.github.io/VBench-project/">VBench github链接</a> <br>
-        <img src="static/images/vbench_opensource.jpg" />
-
-
-    <br>
-    
-    <p>
-        本阶段主要针对论文《Fast Video Generation with SLIDING TILE ATTENTION》进行优化，该论文实现了inference 10x的加速，但是存在如下两个问题：<br>
-        1.尽管大部分head的attention recall在80%以上，但仍有一部分head的召回率仅有30%左右。<br>
-        2.不同timestep、prompt的attention sparse pattern可能不同，并且即使都是斜线，但是斜线的膨胀也可能不同
-    </p>
-    <p style="font-weight: bold;">参考文献:</p>
-    <p>
-        <span style="font-weight: bold; font-style: italic;">[1]</span> Zhang P, Chen Y, Su R, et al. Fast Video Generation with Sliding Tile Attention[J]. arXiv preprint arXiv:2502.04507, 2025. <br>
-        <span style="font-weight: bold; font-style: italic;">[2]</span> Huang Z, He Y, Yu J, et al. Vbench: Comprehensive benchmark suite for video generative models[C]//Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2024: 21807-21818. <br>
-        <span style="font-weight: bold; font-style: italic;">[3]</span> Kong W, Tian Q, Zhang Z, et al. Hunyuanvideo: A systematic framework for large video generative models[J]. arXiv preprint arXiv:2412.03603, 2024. <br>
-        <span style="font-weight: bold; font-style: italic;">[4]</span> Zheng Z, Peng X, Yang T, et al. Open-sora: Democratizing efficient video production for all[J]. arXiv preprint arXiv:2412.20404, 2024. <br>
-        <span style="font-weight: bold; font-style: italic;">[5]</span> Dao T. Flashattention-2: Faster attention with better parallelism and work partitioning[J]. arXiv preprint arXiv:2307.08691, 2023. <br>
-        <span style="font-weight: bold; font-style: italic;">[6]</span> Shah, Jay, et al. "Flashattention-3: Fast and accurate attention with asynchrony and low-precision." Advances in Neural Information Processing Systems 37 (2025): 68658-68685. <br>
-    </p>
-
-    <!-- Pattern 分析 -->
-    <section class="section hero">
-
-        <!-- transition -->
-        <div class="container has-text-centered">
-            <h2 class="title is-3">Attention Map 特点</h2>
-
-            <h2 class="title is-4">Attention Map 稀疏性</h2>
-            <div style="display: flex; justify-content: space-around; align-items: center;">
-                <div>
-                    <img src="static/images/timestepXX.jpg" class="grid-image2" alt="Image 1" />
-                    <p>timestep XX</p>
-                </div>
-                <div>
-                    <img src="static/images/timestep_40.jpg" class="grid-image2" alt="Image 3" />
-                    <p>timestep 40</p>
-                </div>
-            </div>
-
-            <br>
-
-            <!-- step 6 -->
-    <div class="container has-text-centered">
-        <h2 class="title is-3">
-            Attention Map分类
-            <br>
-        </h2>
-        
-        <!-- 添加小标题 3D locality -->
-        <h3 class="title is-4">3D locality：关注局部信息</h3>  <!-- 小标题部分 -->
-
-        <!-- 3D -->
-        <div class="image-container8">
-            <div>
-                <img src="static/images/3D/timestep0_layer6_batch1_head21.png" class="grid-image8" alt="Image 1">
-                <p>timestep0 layer6 head21</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep0_layer12_batch1_head0.png" class="grid-image8" alt="Image 2">
-                <p>timestep0 layer12 head0</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep20_layer6_batch1_head10.png" class="grid-image8" alt="Image 3">
-                <p>timestep20 layer6 head10</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep20_layer6_batch1_head21.png" class="grid-image8" alt="Image 4">
-                <p>timestep20 layer6 head21</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep20_layer24_batch1_head2.png" class="grid-image8" alt="Image 5">
-                <p>timestep20 layer24 head2</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep30_layer24_batch1_head2.png" class="grid-image8" alt="Image 6">
-                <p>timestep30 layer24 head2</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep40_layer0_batch1_head1.png" class="grid-image8" alt="Image 6">
-                <p>timestep40 layer0 head1</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/3D/timestep40_layer0_batch1_head4.png" class="grid-image8" alt="Image 6">
-                <p>timestep40 layer0 head4</p> <!-- 添加文字描述 -->
-            </div>
-        </div>
-        
-        <br>
-        
-        <!-- 添加小标题 全局 -->
-        <h3 class="title is-4">全局性：主要关注全局信息</h3>  <!-- 小标题部分 -->
-
-        <!-- 全局 -->
-        <div class="image-container6">
-            <div>
-                <img src="static/images/quanju/timestep0_layer6_batch1_head4.png" class="grid-image6" alt="Image 1">
-                <p>timestep0 layer6 head4</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/quanju/timestep0_layer6_batch1_head7.png" class="grid-image6" alt="Image 2">
-                <p>timestep0 layer4 head7</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/quanju/timestep10_layer24_batch1_head21.png" class="grid-image6" alt="Image 3">
-                <p>timestep10 layer24 head21</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/quanju/timestep30_layer0_batch1_head11.png" class="grid-image6" alt="Image 4">
-                <p>timestep30 layer0 head11</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/quanju/timestep40_layer0_batch1_head20.png" class="grid-image6" alt="Image 5">
-                <p>timestep40 layer0 head20</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/quanju/timestep49_layer0_batch1_head11.png" class="grid-image6" alt="Image 6">
-                <p>timestep49 layer0 head11</p> <!-- 添加文字描述 -->
-            </div>
-        </div>
-        
-        <br>
-        
-        <!-- 添加小标题 十字 -->
-        <h3 class="title is-4">十字形</h3>  <!-- 小标题部分 -->
-
-        <!-- 全局 -->
-        <div class="image-container6">
-            <div>
-                <img src="static/images/shizi/timestep0_layer6_batch1_head2.png" class="grid-image6" alt="Image 1">
-                <p>timestep0 layer6 head2</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/shizi/timestep0_layer30_batch1_head9.png" class="grid-image6" alt="Image 2">
-                <p>timestep0 layer30 head9</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/shizi/timestep0_layer30_batch1_head10.png" class="grid-image6" alt="Image 3">
-                <p>timestep0 layer30 head10</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/shizi/timestep0_layer30_batch1_head17.png" class="grid-image6" alt="Image 4">
-                <p>timestep0 layer30 head17</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/shizi/timestep10_layer30_batch1_head12.png" class="grid-image6" alt="Image 5">
-                <p>timestep10 layer30 head12</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/shizi/timestep40_layer0_batch1_head12.png" class="grid-image6" alt="Image 6">
-                <p>timestep40 layer0 head12</p> <!-- 添加文字描述 -->
-            </div>
-        </div>
-        
-        <br>
-        
-        <!-- 添加小标题 格点 -->
-        <h3 class="title is-4">格点</h3>  <!-- 小标题部分 -->
-
-        <!-- 格点 -->
-        <div class="image-container6">
-            <div>
-                <img src="static/images/gedian/timestep0_layer12_batch1_head1.png" class="grid-image6" alt="Image 1">
-                <p>timestep0 layer12 head1</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/gedian/timestep0_layer6_batch1_head11.png" class="grid-image6" alt="Image 2">
-                <p>timestep0 layer6 head11</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/gedian/timestep20_layer6_batch1_head11.png" class="grid-image6" alt="Image 3">
-                <p>timestep20 layer6 head11</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/gedian/timestep30_layer6_batch1_head11.png" class="grid-image6" alt="Image 4">
-                <p>timestep30 layer6 head11</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/gedian/timestep40_layer0_batch1_head8.png" class="grid-image6" alt="Image 5">
-                <p>timestep40 layer0 head8</p> <!-- 添加文字描述 -->
-            </div>
-        </div>
-        
-        <br>
-    </div>
-
-            <br>
-
-        </div>
-
-    </section>
-    
-    <div class="container has-text-centered">
-        <h2 class="title is-3">
-            Attention Map分析
-            <br>
-        </h2>
-        
-        <!-- 添加色条图片并旋转90度 -->
-        <div style="display: flex; justify-content: center; margin-bottom: 0; margin-top: 5;">
-            <img src="static/images/total.jpg" style="width: 90px; transform: rotate(90deg); margin-top: -320px; margin-bottom: -310px;" alt="Color Bar">
-        </div>
-
-        <div class="image-container">
-            <div>
-                <img src="static/images/timestep0.jpg" class="grid-image" alt="Image 1">
-                <p>timestep 0</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/timestep10.jpg" class="grid-image" alt="Image 2">
-                <p>timestep 10</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/timestep20.jpg" class="grid-image" alt="Image 3">
-                <p>timestep 20</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/timestep30.jpg" class="grid-image" alt="Image 4">
-                <p>timestep 30</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/timestep40.jpg" class="grid-image" alt="Image 5">
-                <p>timestep 40</p> <!-- 添加文字描述 -->
-            </div>
-            <div>
-                <img src="static/images/timestep49.jpg" class="grid-image" alt="Image 6">
-                <p>timestep 49</p> <!-- 添加文字描述 -->
-            </div>
-        </div>
-        
-        <br>
-
-    </div>
-
-    <br>
-
-    <!-- Method 1 -->
-    <!-- <div class="container has-text-centered">
-        <h2 class="title is-3">Method</h2>
-    </div>
-
-    <br> -->
-
-    <!-- step 1 -->
-    <!-- <div class="container has-text-centered">
-        <h2 class="title is-4">Step 1: 离线分析pattern</h2>
-
-        <div class="video-container">
-            <div style="display: flex; justify-content: space-around; align-items: center;">
-                <img src="static/images/slash1.jpg" style="width: 30%;" alt="Image 1" />
-                <img src="static/images/pattern2.jpg" style="width: 30%;" alt="Image 2" />
-                <img src="static/images/pattern3.jpg" style="width: 30%;" alt="Image 3" />
-            </div>
-        </div>
-    </div>
-
-    <br>
-    <br>
-    <br> -->
-
-    <!-- step 2 -->
-    <!-- <section class="hero teaser">
+      </div>
+      <div class="hero-body" style="padding-bottom: 0rem;">
         <div class="container is-max-desktop">
-            <div class="hero-body">
-                    <h2 class="title is-4" style="text-align: center;">
-                        Step 2: 3D局部性注意力
-                    </h2>
-                <img src="static/images/align.jpg" style="width: 100%; display: block; margin: 0 auto; max-width: none;" />
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h2 class="title is-4" style="color: #3273dc; margin-bottom: 1rem;">TL;DR</h2>
+              <div class="content has-text-justified" style="font-size: 1.25rem; line-height: 1.6; background-color: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3273dc;">
+                <p>
+                  <strong>Self Forcing</strong> trains autoregressive video diffusion models by <strong>simulating the inference process during training</strong>, performing autoregressive rollout with KV caching.
+                    It resolves the train-test distribution mismatch and enables <strong>real-time, streaming video generation on a single RTX 4090</strong>  while matching the quality of state-of-the-art diffusion models.
+                </p>
+              </div>
             </div>
+          </div>
         </div>
-    </section> -->
-
-    <!-- step 3 -->
-    <!-- <div class="container has-text-centered">
-        <h2 class="title is-3" style="text-align: center;">
-            Step 3 (Inference)
-            <br>
-            Render Preview Video Along the Camera Trace on the Reconstructed 3D Scene
-        </h2>
-
-        <div class="video-container">
-            <video autoplay controls muted loop>
-                <source src="static/videos/preview_video/preview1.mp4" type="video/mp4" />
-            </video>
-
-            <video autoplay controls muted loop>
-                <source src="static/videos/preview_video/preview2.mp4" type="video/mp4" />
-            </video>
-
-            <video autoplay controls muted loop>
-                <source src="static/videos/preview_video/preview3.mp4" type="video/mp4" />
-            </video>
-        </div>
+      </div>
     </div>
+  </section>
+  <div class="container " id="overview">
+    <!-- <h2 id="obj-comparison" class="title is-3 has-text-centered">Training paradigms for AR video diffusion models</h2> -->
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 2.0;">
+      <figure class="image is-centered">
+        <img src="static/teaser.jpg">
+    </div>
+  </div>
 
-    <br> -->
-
-    <!-- step 4
-    <div class="container has-text-centered">
-            <h2 class="title is-3">
-                Step 4 Fast Video Generation with SLIDING TILE ATTENTION
-                <br>
-                SAT
-            </h2>
-        <div class="content has-text-justified">
-            We paste the visible latents of preview video into the predicted latent during generation process. However, we only paste on the high noise level and allow for
-            dynamics in lower level of noise, thus we name it "noise shaping" that only shapes the noise at the initial high noise stage.
+  <!-- <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              We introduce Self Forcing, a novel training paradigm for autoregressive video diffusion models. It addresses the longstanding issue of exposure bias, where models trained on ground-truth context must generate sequences conditioned on their own imperfect outputs during inference. Unlike prior methods that denoise future frames based on ground-truth context frames, Self Forcing conditions each frame's generation on previously self-generated outputs by performing autoregressive rollout with key-value(KV) caching during training. This strategy enables supervision through a holistic loss at the video level that directly evaluates the quality of the entire generated sequence, rather than relying solely on traditional frame-wise objectives. To ensure training efficiency, we employ a few-step diffusion model along with a stochastic gradient truncation strategy, effectively balancing computational cost and performance. We further introduce a rolling KV cache mechanism that enables efficient autoregressive video extrapolation. Extensive experiments demonstrate that our approach achieves real-time streaming video generation with sub-second latency on a single GPU, while matching or even surpassing the generation quality of significantly slower and non-causal diffusion models.
+            </p>
+          </div>
         </div>
-            <div class="video-container">
-                <div>
-            <video autoplay controls muted loop>
-                <source src="static/videos/ablation/ablation1_preview.mp4" type="video/mp4" />
-            </video>
-                    <h2 class="subtitle has-text-centered italic">
-                        Preview Video
-                    </h2>
-        </div>
+      </div>
+      </div><br>
+      <!--/ Abstract. -->
+  <!-- </section> --> -->
 
-                <div>
-            <video autoplay controls muted loop>
-                <source src="static/videos/ablation/ablation1_withNoiseShaping.mp4" type="video/mp4" />
-            </video>
-                    <h2 class="subtitle has-text-centered italic">
-                        Scene-Constrained Noise Shaping
-                    </h2>
-        </div>
+  <br>
 
 
-                <div>
-            <video autoplay controls muted loop>
-                <source src="static/videos/ablation/ablation1_withoutNoiseShaping.mp4" type="video/mp4" />
-            </video>
-                    <h2 class="subtitle has-text-centered italic">
-                        No Scene-Constrained Noise Shaping
-                    </h2>
-                </div>
-        </div>
+  <hr>
+  <div class="container " id="text2short">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Real-Time Video Generation</h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <p>
+        Our model generates high-quality 480P videos with an initial latency of <strong>~0.8 seconds</strong>, after which
+        frames are generated in a streaming fashion at <strong>~16 FPS</strong> on a single H100 GPU and ~10 FPS on a single 4090 with some optimizations.
         <br>
+        Below, we show 5-second videos (top) and extrapolated 10-second videos (bottom) generated by our model. <a href="videos.html">[More Examples]</a>
+      </p>
+    </div>
+  </div>
+
+  <br>
 
 
-    </div> -->
+  <div class="video-grid">
 
-    <!-- VBENCH生成质量 -->
-    <!-- <div class="container has-text-centered">
-        <h2 class="title is-3">
-            Step 2 VBENCH生成质量
-            <br>
-        </h2>
-    
-        <table border="1" >
-            
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Config</th>
-                <th>VBench Quality</th>
-                <th>Latency</th>
-                <th>Speedup</th>
-              </tr>
-            </thead>
-          
-            
-            <tbody>
-              <tr>
-                <td>FA2</td>
-                <td>-</td>
-                <td>85.34%</td>
-                <td>1496s</td>
-                <td>0.63x</td>
-              </tr>
-              <tr>
-                <td>FA3</td>
-                <td>-</td>
-                <td>85.34%</td>
-                <td>945s</td>
-                <td>1.00x</td>
-              </tr>
-              <tr>
-                <td>3D Locality</td>
-                <td>w=(30,40,40)</td>
-                <td>84.63%</td>
-                <td>527s</td>
-                <td>1.79x</td>
-              </tr>
-              <tr>
-                <td>3D Locality</td>
-                <td>w=(18,24,24)</td>
-                <td>81.47%</td>
-                <td>268s</td>
-                <td>3.53x</td>
-              </tr>
-            </tbody>
-          </table>
-          
+    <div class="video-item">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="examples/movie-gen-5s/A close-up shot of a ceramic teacup slowly pouring water into a gla.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A close-up shot of a ceramic teacup slowly pouring water into a glass mug. The water flows smoothly from the spout of the teacup into the mug, creating gentle ripples as it fills up. Both cups have detailed textures, with the teacup having a matte finish and the glass mug showcasing clear transparency. The background is a blurred kitchen countertop, adding context without distracting from the central action. The pouring motion is fluid and natural, emphasizing the interaction between the two cups.</p>
     </div>
 
-    <br> -->
+    <div class="video-item">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="examples/movie-gen-5s/A dynamic and chaotic scene in a dense forest during a heavy rainstorm, capturing a real girl franti-0.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A dynamic and chaotic scene in a dense forest during a heavy rainstorm, capturing a real girl frantically running through the foliage. Her wild hair flows behind her as she sprints, her arms flailing and her face contorted in fear and desperation. Behind her, various animals—rabbits, deer, and birds—are also running, creating a frenzied atmosphere. The girl's clothes are soaked, clinging to her body, and she is screaming and shouting as she tries to escape. The background is a blur of greenery and rain-drenched trees, with occasional glimpses of the darkening sky. A wide-angle shot from a low angle, emphasizing the urgency and chaos of the moment.</p>
+    </div>
 
-    
+    <div class="video-item">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="examples/movie-gen-5s/A dynamic over-the-shoulder perspective of a chef meticulously plating a dish in a bustling kitchen.-0.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A dynamic over-the-shoulder perspective of a chef meticulously plating a dish in a bustling kitchen. The chef, a middle-aged man with a neatly trimmed beard and focused expression, deftly arranges ingredients on a pristine white plate. His hands move with precision, each gesture deliberate and practiced. The background shows a crowded kitchen with steaming pots, whirring blenders, and the clatter of utensils. Bright lights highlight the scene, casting shadows across the busy workspace. The camera angle captures the chef's detailed work from behind, emphasizing his skill and dedication.</p>
+    </div>
 
-    <br>
+    <div class="video-item">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="examples/vbench/A single white sheep bending down to drink water from a calm river. The sheep has fluffy wool, long -0.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A single white sheep bending down to drink water from a calm river. The sheep has fluffy wool, long curved horns, and soft brown eyes. It is positioned near the riverbank, with its front legs partially submerged in the clear water. The river flows gently, reflecting the surrounding greenery and blue sky. The background shows lush grass and trees along the riverbank, creating a serene pastoral landscape. The sheep's body is slightly tilted as it bends down to drink, emphasizing a natural and tranquil motion. Medium close-up shot focusing on the sheep and the river.</p>
+    </div>
 
-    <!-- step 3 -->
-    
+    <div class="video-item">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="examples/vbench/A playful raccoon is seen playing an electronic guitar, strumming the strings with its front paws. T-3.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A playful raccoon is seen playing an electronic guitar, strumming the strings with its front paws. The raccoon has distinctive black facial markings and a bushy tail. It sits comfortably on a small stool, its body slightly tilted as it focuses intently on the instrument. The setting is a cozy, dimly lit room with vintage posters on the walls, adding a retro vibe. The raccoon's expressive eyes convey a sense of joy and concentration. Medium close-up shot, focusing on the raccoon's face and hands interacting with the guitar.</p>
+    </div>
+
+    <div class="video-item">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="examples/movie-gen-10s/A dramatic and dynamic scene in the style of a disaster movie, depicting a powerful tsunami rushing -0.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A dramatic and dynamic scene in the style of a disaster movie, depicting a powerful tsunami rushing through a narrow alley in Bulgaria. The water is turbulent and chaotic, with waves crashing violently against the walls and buildings on either side. The alley is lined with old, weathered houses, their facades partially submerged and splintered. The camera angle is low, capturing the full force of the tsunami as it surges forward, creating a sense of urgency and danger. People can be seen running frantically, adding to the chaos. The background features a distant horizon, hinting at the larger scale of the tsunami. A dynamic, sweeping shot from a low-angle perspective, emphasizing the movement and intensity of the event.</p>
+    </div>
+
+  </div>
+  <!--
+  <div id="results-carousel" class="carousel results-carousel">
+    <div class="item">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="https://huggingface.co/datasets/tianweiy/causvid_website/resolve/main/videos/5s_t2v_decoded/video_0009.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">close up shot of a woman, police lights flashing in background, cinematic, low contrast
+      </p>
+    </div>
+
+    <div class="item">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="https://huggingface.co/datasets/tianweiy/causvid_website/resolve/main/videos/5s_t2v_decoded/video_0010.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">in a beautifully rendered papercraft world, a steamboat travels across a vast ocean
+        with wispy clouds in the sky. vast grassy hills lie in the distant background, and some sealife is visible
+        near the papercraft ocean's surface</p>
+    </div>
+
+    <div class="item">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="https://huggingface.co/datasets/tianweiy/causvid_website/resolve/main/videos/5s_t2v_decoded/video_0011.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">Macro shot of a man wearing an antique diving helmet with dark glass and a jetpack
+        walking on the veins of a leaf. Realistic style</p>
+    </div>
+
+    <div class="item">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="https://huggingface.co/datasets/tianweiy/causvid_website/resolve/main/videos/5s_t2v_decoded/video_0012.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">A Samoyed and a Golden Retriever dog are playfully romping through a futuristic neon
+        city at night. The neon lights emitted from the nearby buildings glistens off of their fur.</p>
+    </div>
+
+    <div class="item">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="https://huggingface.co/datasets/tianweiy/causvid_website/resolve/main/videos/5s_t2v_decoded/video_0013.mp4"
+          type="video/mp4">
+      </video>
+      <p class="prompt-text">Carefully pouring the milk into the cup, the milk flowed smoothly and the cup was
+        gradually filled with a milky white color</p>
+    </div>
+
+  </div> -->
+
+  <hr>
+  <div class="container " id="overview">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">(Surprisingly) Efficient Training, Even Without Full Parallelism</h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <p>
+        While Self Forcing relies on sequential rollout, it is surprisingly efficient and obtains better quality with the same training budget. This is mainly because we still maintain sufficient parallelism even processing one frame at a time.
+      </p>
+    </div>
+
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 2.0;">
+      <figure class="image is-centered">
+        <img src="static/results.png">
+      </figure>
+    </div>
+  </div>
+  <br>
+
+  <hr>
 
 
-</div>
+  <div class="container ">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Faster, and Better </h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <p>
+        Our method has the same speed as CausVid but has much better video quality, free from over-saturation artifacts and having more natural motion.  Compared to Wan, SkyReels, and MAGI, our approach is <strong>150–400×</strong> faster in terms of latency, while achieving comparable or superior visual quality.
+      </p>
+    </div>
+  </div>
+
+  <br>
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <p><strong style="font-size: 24px;">Wan2.1-1.3B</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">SkyReels2-1.3B</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">MAGI-1-4.5B</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">CausVid-1.3B</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">Ours-1.3B</strong></p>
+    </div>
+  </div>
+
+  <div id="results-carousel"
+    style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/wan/0000.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/skyreels2/0000.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/magi1/0000.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/causvid/0000.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_dmd/0000.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <p class="prompt-text">A stylish woman walks down a Tokyo street filled with warm glowing neon and animated city signage. She wears a black leather jacket, a long red dress, and black boots, and carries a black purse. She wears sunglasses and red lipstick. She walks confidently and casually. The street is damp and reflective, creating a mirror effect of the colorful lights. Many pedestrians walk about.</p>
+  <!-- Row 2 -->
+
+  <div id="results-carousel"
+  style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/wan/0014.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/skyreels2/0014.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/magi1/0014.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/causvid/0014.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_dmd/0014.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <p class="prompt-text">A petri dish with a bamboo forest growing within it that has tiny red pandas running around.</p>
+  <div id="results-carousel"
+    style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/wan/0040.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/skyreels2/0040.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/magi1/0040.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/causvid/0040.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_dmd/0040.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <p class="prompt-text">An adorable happy otter confidently stands on a surfboard wearing a yellow lifejacket, riding along turquoise tropical waters near lush tropical islands, 3D digital render art style.</p>
+  <br>
+  <hr>
+<!--   <div class="container ">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Code/Uncrated Samples</h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <p>
+        In the local folder <a href="./uncurated_samples">uncurated_samples</a>, we attach uncurated samples from our method generated from the first 64 prompts in the MovieGenBench dataset with a fixed random seed (seed = 0). We provide source code for our method in the <a href="./code">code</a> folder.
+      </p>
+    </div>
+  </div> -->
+  <!-- <br> -->
+  <!-- <hr> -->
+  <div class="container ">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Works with various distribution matching objectives, supports frame-wise AR generation</h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <!-- <p>
+        We observe that chunk-wise Self Forcing with DMD, SiD, and GAN objectives yields qualitatively similar results, while frame-wise Self Forcing with the GAN loss performs slightly worse than with DMD or SiD, possibly due to the inherent challenges of training GANs.
+      </p> -->
+    </div>
+  </div>
+  <br>
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <p><strong style="font-size: 24px;">Chunk-wise, SiD</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">Chunk-wise, GAN</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">Chunk-wise, DMD</strong></p>
+    </div>
+  </div>
+  <div id="results-carousel"
+    style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_sid/block3_2.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_gan/block3_2.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_dmd/0004.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <p class="prompt-text">Animated scene features a close-up of a short fluffy monster kneeling beside a melting red candle. </p>
+  <br>
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <p><strong style="font-size: 24px;">Frame-wise, SiD</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">Frame-wise, GAN</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">Frame-wise, DMD</strong></p>
+    </div>
+  </div>
+  <div id="results-carousel"
+    style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_sid/block1.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_gan/block1.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/self_forcing_dmd/block1.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <p class="prompt-text">A close up view of a glass sphere that has a zen garden within it. There is a small dwarf in the sphere who is raking the zen garden and creating patterns in the sand.</p>
+
+  <!-- <br>
+  <hr>
+  <div class="container ">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Rolling KV Cache Extrapolation: Comparing With and Without Local Attention Training</h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <p>
+        We show that naively performing rolling KV cache to generate long videos leads to flickering artifacts, which can be addressed by performing local attention training.
+      </p>
+    </div>
+  </div>
+  <br>
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <p><strong style="font-size: 24px;">Without Local Attention Training</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">With Local Attention Training</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">Without Local Attention Training</strong></p>
+    </div>
+    <div class="column">
+      <p><strong style="font-size: 24px;">With Local Attention Training</strong></p>
+    </div>
+  </div>
+  <div id="results-carousel"
+    style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/local-21-rolling_10s/0.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/local-18-rolling_10s/0.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+          <source
+            src="static/videos/local-21-rolling_10s/3.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/local-18-rolling_10s/3.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div> -->
+
+  <br>
+  <hr>
+  <div class="container ">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Limitation: Extrapolation Quality</h2>
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
+      <p>
+        While Self Forcing addresses exposure bias and we observe no error accumulation within the video length the model is trained on (5 seocnds), we still observe quality degradation when extrapolating beyond its training horizon. Below we show 30-second videos generated via sliding window extrapolation.
+      </p>
+    </div>
+  </div>
+  <br>
+  <div id="results-carousel"
+    style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/30s/0006.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/30s/0012.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/30s/0024.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <div class="item" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <video id="cereal" controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/30s/0016.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <p>This close-up shot of a Victoria crowned pigeon showcases its striking blue plumage and red chest...</p>
+    </div>
+    <div class="column">
+      <p>A cartoon kangaroo disco dances.</p>
+    </div>
+    <div class="column">
+      <p>A Chinese Lunar New Year celebration video with Chinese Dragon.</p>
+    </div>
+    <div class="column">
+      <p>3D animation of a small, round, fluffy creature with big, expressive eyes explores a vibrant, enchanted forest...</p>
+    </div>
+  </div>
+  </section>
 
 
+  <div class="container ">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">BibTeX</h2>
+  </div>
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div style="position: relative;">
+        <pre><code id="bibtex-code">@article{huang2025selfforcing,
+  title={Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion},
+  author={Huang, Xun and Li, Zhengqi and He, Guande and Zhou, Mingyuan and Shechtman, Eli},
+  journal={arXiv preprint arXiv:2506.08009},
+  year={2025}
+}</code></pre>
+        <button id="copy-bibtex" onclick="copyBibtex()" style="position: absolute; top: 10px; right: 10px; background: #3273dc; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+          Copy
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function copyBibtex() {
+      const bibtexText = `@article{huang2025selfforcing,
+  title={Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion},
+  author={Huang, Xun and Li, Zhengqi and He, Guande and Zhou, Mingyuan and Shechtman, Eli},
+  journal={arXiv preprint arXiv:2506.08009},
+  year={2025}
+}`;
+
+      navigator.clipboard.writeText(bibtexText).then(function() {
+        const button = document.getElementById('copy-bibtex');
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.style.background = '#48c774';
+        setTimeout(function() {
+          button.textContent = originalText;
+          button.style.background = '#3273dc';
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Failed to copy text: ', err);
+      });
+    }
+  </script>
+
+  <footer class="footer">
+    <div class="container" align="center">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var videos = document.querySelectorAll('#results-carousel video');
+
+      videos.forEach(function (video) {
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (!isMobile) {
+          // console.log('Autoplay enabled for non-mobile devices');
+          if (!video.classList.contains('single_image_video')) {
+            video.setAttribute('autoplay', 'autoplay');
+            // video.play().catch(function(error) {
+            //     console.error('Video playback failed:', error);
+            // });
+          }
+
+          // else case is implicit - no action needed for 'single_image_video'
+        } else {
+          console.log('Autoplay disabled for mobile devices');
+        }
+      });
+    });
+  </script>
 
 </body>
 
