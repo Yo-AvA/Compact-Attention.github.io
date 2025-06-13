@@ -201,7 +201,8 @@
           </div>
         </div>
       </div>
-      <div class="hero-body" style="padding-bottom: 0rem;">
+
+      <!-- <div class="hero-body" style="padding-bottom: 0rem;">
         <div class="container is-max-desktop">
           <div class="columns is-centered">
             <div class="column has-text-centered">
@@ -214,7 +215,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
       <div class="hero-body" style="padding-bottom: 0rem;">
         <div class="container is-max-desktop">
           <div class="columns is-centered">
@@ -222,8 +224,7 @@
               <h2 class="title is-4" style="color: #3273dc; margin-bottom: 1rem;">TL;DR</h2>
               <div class="content has-text-justified" style="font-size: 1.25rem; line-height: 1.6; background-color: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3273dc;">
                 <p>
-                  <strong>Self Forcing</strong> trains autoregressive video diffusion models by <strong>simulating the inference process during training</strong>, performing autoregressive rollout with KV caching.
-                    It resolves the train-test distribution mismatch and enables <strong>real-time, streaming video generation on a single RTX 4090</strong>  while matching the quality of state-of-the-art diffusion models.
+                  <strong>Compact Attention</strong> accelerates video generation by exploiting structured sparsity in transformer attention. The method identifies patterns that enable efficient computation. Through adaptive tile grouping and automated mask optimization, it eliminates redundant computations, and achieves <strong>2.5×</strong> speedup on models like Hunyuan while maintaining visual quality comparable to full attention. 
                 </p>
               </div>
             </div>
@@ -236,51 +237,53 @@
     <!-- <h2 id="obj-comparison" class="title is-3 has-text-centered">Training paradigms for AR video diffusion models</h2> -->
     <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 2.0;">
       <figure class="image is-centered">
-        <img src="static/teaser.jpg">
+        <img src="static/images/pipeline.jpg" style="max-width: 73%;">
+        <figcaption style="text-align: center; font-size: 1rem; margin-top: 0.5rem;">
+        Figure 1: Our proposed pipeline for AR video diffusion models.
+        </figcaption>
+      </figure>
     </div>
   </div>
 
-  <!-- <section class="section">
+  <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              We introduce Self Forcing, a novel training paradigm for autoregressive video diffusion models. It addresses the longstanding issue of exposure bias, where models trained on ground-truth context must generate sequences conditioned on their own imperfect outputs during inference. Unlike prior methods that denoise future frames based on ground-truth context frames, Self Forcing conditions each frame's generation on previously self-generated outputs by performing autoregressive rollout with key-value(KV) caching during training. This strategy enables supervision through a holistic loss at the video level that directly evaluates the quality of the entire generated sequence, rather than relying solely on traditional frame-wise objectives. To ensure training efficiency, we employ a few-step diffusion model along with a stochastic gradient truncation strategy, effectively balancing computational cost and performance. We further introduce a rolling KV cache mechanism that enables efficient autoregressive video extrapolation. Extensive experiments demonstrate that our approach achieves real-time streaming video generation with sub-second latency on a single GPU, while matching or even surpassing the generation quality of significantly slower and non-causal diffusion models.
+               The computational demands of self-attention mechanisms pose a critical challenge for transformer-based video generation, particularly in synthesizing ultra-long sequences. Current approaches, such as factorized attention and fixed sparse patterns, fail to fully exploit the inherent spatio-temporal redundancies in video data. Through systematic analysis of video diffusion transformers (DiT), we uncover a key insight: Attention matrices exhibit structured, yet heterogeneous sparsity patterns, where specialized heads dynamically attend to distinct spatiotemporal regions (e.g., local pattern, cross-shaped pattern, or global pattern). Existing sparse attention methods either impose rigid constraints or introduce significant overhead, limiting their effectiveness. To address this, we propose <strong>Compact Attention</strong>, a hardware-aware acceleration framework featuring three innovations: 1) Adaptive tiling strategies that approximate diverse spatial interaction patterns via dynamic tile grouping, 2) Temporally varying windows that adjust sparsity levels based on frame proximity, and 3) An automated configuration search algorithm that optimizes sparse patterns while preserving critical attention pathways. Our method achieves <strong>1.6\~2.5</strong>
+               acceleration in attention computation on single-GPU setups while maintaining comparable visual quality with full-attention baselines. This work provides a principled approach to unlocking efficient long-form video generation through structured sparsity exploitation.
             </p>
           </div>
         </div>
       </div>
       </div><br>
       <!--/ Abstract. -->
-  <!-- </section> --> -->
+  <!-- </section> -->
 
   <br>
 
 
   <hr>
   <div class="container " id="text2short">
-    <h2 id="obj-comparison" class="title is-3 has-text-centered">Real-Time Video Generation</h2>
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Faster Video Generation</h2>
     <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 1.8;">
       <p>
-        Our model generates high-quality 480P videos with an initial latency of <strong>~0.8 seconds</strong>, after which
-        frames are generated in a streaming fashion at <strong>~16 FPS</strong> on a single H100 GPU and ~10 FPS on a single 4090 with some optimizations.
-        <br>
-        Below, we show 5-second videos (top) and extrapolated 10-second videos (bottom) generated by our model. <a href="videos.html">[More Examples]</a>
+        Compact Attention achieves <strong>1.6~2.5x</strong> acceleration in attention computation on single-GPU setups while maintaining comparable visual quality with full-attention baselines.
+        Below, we show videos accelerated by our method compared to the full attention baseline. The top row shows the original videos generated by DiT with full attention, while the bottom row shows the videos generated by our method with compact attention.
+        <!-- <a href="videos.html">[More Examples]</a> -->
       </p>
     </div>
   </div>
-
-  <br>
-
-
+<div>
+                
   <div class="video-grid">
 
     <div class="video-item">
       <video controls preload="metadata" autoplay muted loop playsinline>
         <source
-          src="examples/movie-gen-5s/A close-up shot of a ceramic teacup slowly pouring water into a gla.mp4"
+          src="static/videos/acceleration_examples/hunyuan/Case1.mp4"
           type="video/mp4">
       </video>
       <p class="prompt-text">A close-up shot of a ceramic teacup slowly pouring water into a glass mug. The water flows smoothly from the spout of the teacup into the mug, creating gentle ripples as it fills up. Both cups have detailed textures, with the teacup having a matte finish and the glass mug showcasing clear transparency. The background is a blurred kitchen countertop, adding context without distracting from the central action. The pouring motion is fluid and natural, emphasizing the interaction between the two cups.</p>
