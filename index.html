@@ -233,7 +233,9 @@
   <div class="container " id="overview">
     <!-- <h2 id="obj-comparison" class="title is-3 has-text-centered">Training paradigms for AR video diffusion models</h2> -->
     <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 2.0;">
-      <figure class="image is-centered">
+      
+
+      <figure class="im age is-centered">
         <img src="static/images/firstFig_page.jpg" style="max-width: 73%;">
         <figcaption style="text-align: center; font-size: 1rem; margin-top: 0.5rem; width: 70%; margin: 0 auto;">
         Sparsity between slashes are hard to exploit for acceleration. Periodic, hierarchical attention patterns are shown in complicated attention maps when a single query token is arranged properly.
@@ -625,6 +627,17 @@
         (a) A visualization of the layer-wise computation during denoising. For different prompts, the computational demands are nearly identical.<br>
         (b) Region similarity across denoising steps.
     </figcaption>
+
+    <div class="video-item"  style="max-width: 70%; margin-top: 0.5rem; margin: 0 auto; text-align: center;">
+      <video controls preload="metadata" autoplay muted loop playsinline>
+        <source
+          src="static/videos/demostration/pattern_stability.mp4"
+          type="video/mp4">
+      </video>
+    </div>
+    <p style="max-width: 73%; font-size: 1rem; margin-top: 0.5rem; text-align: center;">
+      Per-query-token attention patterns are stable across nearby timesteps/prompts/seeds, which can be exploited for acceleration using static sparse strategies.
+    </p>
 </figure>
     </div>
   </div>
