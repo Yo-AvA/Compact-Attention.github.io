@@ -261,8 +261,6 @@
       <!--/ Abstract. -->
   <!-- </section> -->
 
-  <br>
-
 
   <hr>
   <div class="container " id="text2short">
@@ -565,9 +563,16 @@
         Compact Attention pipeline. The method identifies structured sparsity patterns in attention maps, enabling efficient computation through adaptive tile grouping and automated mask optimization.
         </figcaption>
       </figure>
+      <div class="video-item"  style="max-width: 70%; margin-top: 0.5rem; margin: 0 auto; text-align: center;">
+        <video controls preload="metadata" autoplay muted loop playsinline>
+          <source
+            src="static/videos/demostration/GreedyWindowSearch.mp4"
+            type="video/mp4">
+        </video>
+      </div>
     </div>
   </div>
-
+  
   <hr>
   <div class="container " id="overview">
     <h2 id="obj-comparison" class="title is-3 has-text-centered">Tile-Based Sparsity for Efficient Blockwise Attention</h2>
@@ -619,31 +624,62 @@
 
     <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 2.0;">
       <figure class="image" style="display: flex; flex-direction: column; align-items: center;">
-    <div style="display: flex; justify-content: center; gap: 5%; width: 100%;">
-        <img src="static/images/calSize_new.jpg" style="width: 30%;">
-        <img src="static/images/pattern_sim_new.jpg" style="width: 30%;">
-    </div>
-    <figcaption style="text-align: center; font-size: 1rem; margin-top: 0.5rem; width: 70%;">
-        (a) A visualization of the layer-wise computation during denoising. For different prompts, the computational demands are nearly identical.<br>
-        (b) Region similarity across denoising steps.
-    </figcaption>
+        <div style="display: flex; justify-content: center; gap: 5%; width: 100%;">
+            <img src="static/images/calSize_new.jpg" style="width: 30%;">
+            <img src="static/images/pattern_sim_new.jpg" style="width: 30%;">
+        </div>
+        <figcaption style="text-align: center; font-size: 1rem; margin-top: 0.5rem; width: 70%;">
+            (a) A visualization of the layer-wise computation during denoising. For different prompts, the computational demands are nearly identical.<br>
+            (b) Region similarity across denoising steps.
+        </figcaption>
 
-    <div class="video-item"  style="max-width: 70%; margin-top: 0.5rem; margin: 0 auto; text-align: center;">
-      <video controls preload="metadata" autoplay muted loop playsinline>
-        <source
-          src="static/videos/demostration/pattern_stability.mp4"
-          type="video/mp4">
-      </video>
-    </div>
-    <p style="max-width: 73%; font-size: 1rem; margin-top: 0.5rem; text-align: center;">
-      Per-query-token attention patterns are stable across nearby timesteps/prompts/seeds, which can be exploited for acceleration using static sparse strategies.
-    </p>
-</figure>
+        <div class="video-item"  style="max-width: 70%; margin-top: 0.5rem; margin: 0 auto; text-align: center;">
+          <video controls preload="metadata" autoplay muted loop playsinline>
+            <source
+              src="static/videos/demostration/pattern_stability.mp4"
+              type="video/mp4">
+          </video>
+        </div>
+        <p style="max-width: 73%; font-size: 1rem; margin-top: 0.5rem; text-align: center;">
+          Per-query-token attention patterns are stable across nearby timesteps/prompts/seeds, which can be exploited for acceleration using static sparse strategies.
+        </p>
+      </figure>
     </div>
   </div>
   <br>
   <hr>
+  <div class="container " id="overview">
+    <h2 id="obj-comparison" class="title is-3 has-text-centered">Pattern Stability Enables Offline Acceleration</h2>
+    <div class="content has-text-justified" style="font-size: 1rem; line-height: 1.8;">
+      <p style="max-width: 73%; text-align: justified; margin: 0 auto;">
+        Our analysis shows that spatiotemporal attention patterns are intrinsic to the model architecture, not input-dependent. These patterns remain stable across layers and heads. We classify them as ​​global​​ (covering >85% spatial extent) or ​​local​​ (focused interaction regions), enabling offline acceleration through predictable sparse computation.
+      </p>
+    </div>
 
+    <div class="content has-text-justified" style="font-size: 1.5rem; line-height: 2.0;">
+      <figure class="image" style="display: flex; flex-direction: column; align-items: center;">
+        <div style="display: flex; justify-content: center; gap: 5%; width: 100%;">
+            <img src="static/images/calSize_new.jpg" style="width: 30%;">
+            <img src="static/images/pattern_sim_new.jpg" style="width: 30%;">
+        </div>
+        <figcaption style="text-align: center; font-size: 1rem; margin-top: 0.5rem; width: 70%;">
+            (a) A visualization of the layer-wise computation during denoising. For different prompts, the computational demands are nearly identical.<br>
+            (b) Region similarity across denoising steps.
+        </figcaption>
+
+        <div class="video-item"  style="max-width: 70%; margin-top: 0.5rem; margin: 0 auto; text-align: center;">
+          <video controls preload="metadata" autoplay muted loop playsinline>
+            <source
+              src="static/videos/demostration/pattern_stability.mp4"
+              type="video/mp4">
+          </video>
+        </div>
+        <p style="max-width: 73%; font-size: 1rem; margin-top: 0.5rem; text-align: center;">
+          Per-query-token attention patterns are stable across nearby timesteps/prompts/seeds, which can be exploited for acceleration using static sparse strategies.
+        </p>
+      </figure>
+    </div>
+  </div>
   <!-- <div class="container ">
     <h2 id="obj-comparison" class="title is-3 has-text-centered">BibTeX</h2>
   </div>
